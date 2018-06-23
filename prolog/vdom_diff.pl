@@ -2,6 +2,8 @@
     vdom_diff/4 % +VIn, +VPrev, -Diff, -VOut
 ]).
 
+:- use_module(library(lists)).
+:- use_module(library(apply)).
 :- use_module(library(error)).
 :- use_module(vdom_component).
 :- use_module(vdom_node).
@@ -22,7 +24,8 @@ vdom_diff(VIn, VPrev, Diff, VOut):-
     must_be(nonvar, VPrev),
     must_be(var, Diff),
     must_be(var, VOut),
-    vdom_diff(VIn, VPrev, [], Diff, VOut).
+    vdom_diff(VIn, VPrev, [], List, VOut),
+    Diff =.. [diff|List].
 
 vdom_diff(VIn, VPrev, Path, Diff, VOut):-    
     vdom_node_type(VIn, TIn),

@@ -6,12 +6,12 @@
 
 test(diff_text):-
     vdom_diff(hello, hello, Diff, VOut),
-    assertion(Diff = []),
+    assertion(Diff = diff),
     assertion(VOut = hello).
 
 test(diff_text_replace):-
     vdom_diff(hello, world, Diff, VOut),
-    assertion(Diff = [replace(path, "hello")]),
+    assertion(Diff = diff(replace(path, "hello"))),
     assertion(VOut = hello).
 
 test(diff_text_replace_deep):-
@@ -19,7 +19,7 @@ test(diff_text_replace_deep):-
         div([], [hello]),
         div([], [world]),
         Diff, VOut),
-    assertion(Diff = [replace(path(0), "hello")]),
+    assertion(Diff = diff(replace(path(0), "hello"))),
     assertion(VOut = div([], [hello])).
 
 test(diff_tag):-
@@ -27,7 +27,7 @@ test(diff_tag):-
         div([], []),
         div([], []),
         Diff, VOut),
-    assertion(Diff = []),
+    assertion(Diff = diff),
     assertion(VOut = div([], [])).
 
 test(diff_tag_replace_text):-
@@ -35,7 +35,7 @@ test(diff_tag_replace_text):-
         div([], []),
         hello,
         Diff, VOut),
-    assertion(Diff = [replace(path, div(attrs, body))]),
+    assertion(Diff = diff(replace(path, div(attrs, body)))),
     assertion(VOut = div([], [])).
 
 test(diff_tag_replace_tag):-
@@ -43,7 +43,7 @@ test(diff_tag_replace_tag):-
         div([], []),
         span([], []),
         Diff, VOut),
-    assertion(Diff = [replace(path, div(attrs, body))]),
+    assertion(Diff = diff(replace(path, div(attrs, body)))),
     assertion(VOut = div([], [])).
 
 test(diff_keyed_same):-
@@ -51,7 +51,7 @@ test(diff_keyed_same):-
         div([key=k1], []),
         div([key=k1], []),
         Diff, VOut),
-    assertion(Diff = []),
+    assertion(Diff = diff),
     assertion(VOut = div([key=k1], [])).
 
 test(diff_keyed_reorder):-
@@ -59,7 +59,7 @@ test(diff_keyed_reorder):-
         span([], [span([key=k1], []), span([key=k2], [])]),
         span([], [span([key=k2], []), span([key=k1], [])]),
         Diff, VOut),
-    assertion(Diff = [roc(path, actions(reuse(1), reuse(0)))]),
+    assertion(Diff = diff(roc(path, actions(reuse(1), reuse(0))))),
     assertion(VOut = span([], [span([key=k1], []), span([key=k2], [])])).
 
 test(diff_keyed_reorder_and_attrs):-
@@ -71,10 +71,10 @@ test(diff_keyed_reorder_and_attrs):-
             [span([key=k2], []), span([key=k1], [])
         ]),
         Diff, VOut),
-    assertion(Diff = [
+    assertion(Diff = diff(
         set_attrs(path, attrs(className("world"))),
         roc(path, actions(reuse(1), reuse(0)))
-    ]),
+    )),
     assertion(VOut = span([className=world], [
         span([key=k1], []), span([key=k2], [])
     ])).
@@ -84,7 +84,7 @@ test(diff_attrs):-
         div([className=class2], []),
         div([className=class1], []),
         Diff, VOut),
-    assertion(Diff = [set_attrs(path, attrs(className("class2")))]),
+    assertion(Diff = diff(set_attrs(path, attrs(className("class2"))))),
     assertion(VOut = div([className=class2], [])).
 
 :- end_tests(vdom_diff).

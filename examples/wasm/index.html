@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>SWI-Prolog Virtual DOM demo</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script>
+            var Module = {
+                noInitialRun: true,
+                preRun: [() => FS.init(() => null)],
+                onRuntimeInitialized: async () => {
+                    const prolog = new Prolog(Module, [
+                        'swipl',
+                        '-x', 'wasm-preload/swipl.prc',
+                        '--nosignals'
+                    ]);
+                    await loadPrologFiles();
+                    prolog.call_string("consult('/app/app.pl').");
+                    const patcher = new Patcher(prolog,
+                        document.getElementById('app'));
+                    patcher.initial();
+                    patcher.attachEvents();
+                }
+            };
+        </script>
+        <script src="js/prolog.js"></script>
+        <script src="js/loader.js"></script>
+        <script src="js/patcher.js"></script>
+        <script src="swipl-web.js"></script>
+    </body>
+</html>

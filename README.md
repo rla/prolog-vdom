@@ -19,7 +19,7 @@ vdom_diff(VIn, VPrev, Diff, VOut).
 
  * VIn - current VDOM tree.
  * VPrev - previous VDOM tree.
- * Diff - serialized updates (`[replace(path(0), "hello")]`).
+ * Diff - serialized updates (`diff(replace(path(0), "hello"))`).
  * VOut - current full VDOM tree.
 
 In this example the first child of the root node is being
@@ -59,7 +59,7 @@ tree as described in "DOM serialization".
 
 Set/unset attributes:
 
-```
+```prolog
 set_attrs(Path, Attrs)
 ```
 

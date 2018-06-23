@@ -6,6 +6,7 @@
 
 :- use_module(library(apply)).
 :- use_module(library(error)).
+:- use_module(library(lists)).
 :- use_module(vdom_build).
 :- use_module(vdom_build_attrs).
 
@@ -28,10 +29,8 @@ vdom_set_attrs_at(Path, Changes, Diff):-
 vdom_replace_at(Path, VDom, Diff, VOut):-
     must_be(nonvar, Path),
     must_be(nonvar, VDom),
-    debug(vdom, 'Rebuilding node at ~w', [Path]),
     vdom_build(VDom, NodeTerm, VOut),
     path_term(Path, PathTerm),
-    debug(vdom, 'Rebuilt node at ~w', [Path]),
     Diff = [replace(PathTerm, NodeTerm)].
 
 % Generates reorder-or-create (ROC) action.

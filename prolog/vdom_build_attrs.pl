@@ -2,6 +2,7 @@
     vdom_build_attrs/2 % +Attrs, -Term
 ]).
 
+:- use_module(library(apply)).
 :- use_module(library(lists)).
 :- use_module(library(error)).
 
