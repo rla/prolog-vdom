@@ -117,7 +117,7 @@ class Prolog {
         const len = this.module.lengthBytesUTF8(string) + 1;
         const ptr = this.module._malloc(len);
         this.module.stringToUTF8(string, ptr, len);
-        const ret = !!this.bindings.PL_put_chars(term, 5, len - 1, ptr);
+        const ret = !!this.bindings.PL_put_chars(term, 5 | 0x1000, len - 1, ptr);
         this.module._free(ptr);
         return ret;
     }
