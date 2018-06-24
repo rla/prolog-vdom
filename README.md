@@ -7,6 +7,12 @@ The implementation keeps the VDOM tree on the Prolog side
 and serializes the initial tree and modifications through
 the foreign language interface.
 
+Demo: <http://demos.rlaanemets.com/prolog-vdom/examples/wasm/>
+
+## Overview
+
+![Prolog VDOM](docs/prolog-vdom.png)
+
 ## Prolog API
 
 See example:
