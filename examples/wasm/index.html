@@ -8,25 +8,29 @@
            .task-done { text-decoration: line-through }
            .error { color: red }
            form, ul { margin: 10px 0 }
+           .loader { animation: blinker 1s linear infinite; font-size: 70px; }
+            @keyframes blinker { 50% { opacity: 0; }}
         </style>
     </head>
     <body>
-        <div id="app"></div>
+        <div id="app">
+            <div class="loader">LOADING ...</div>
+        </div>
         <script>
             // Loads files over fetch and stores them
             // in the virtual filesystem.
             const loadPrologFiles = async () => {
                 const files = [
-                    '/prolog/vdom_build_attrs.pl',
-                    '/prolog/vdom_build.pl',
-                    '/prolog/vdom_component.pl',
-                    '/prolog/vdom_diff_attrs.pl',
-                    '/prolog/vdom_diff.pl',
-                    '/prolog/vdom_keyed.pl',
-                    '/prolog/vdom_node.pl',
-                    '/prolog/vdom_patch_action.pl',
-                    '/prolog/vdom.pl',
-                    '/examples/wasm/app.pl'
+                    '../../prolog/vdom_build_attrs.pl',
+                    '../../prolog/vdom_build.pl',
+                    '../../prolog/vdom_component.pl',
+                    '../../prolog/vdom_diff_attrs.pl',
+                    '../../prolog/vdom_diff.pl',
+                    '../../prolog/vdom_keyed.pl',
+                    '../../prolog/vdom_node.pl',
+                    '../../prolog/vdom_patch_action.pl',
+                    '../../prolog/vdom.pl',
+                    '../wasm/app.pl'
                 ];
                 FS.mkdir('/app');
                 return Promise.all(files.map(async (url) => {
@@ -55,8 +59,8 @@
                 }
             };
         </script>
-        <script src="/js/prolog.js"></script>
-        <script src="/js/patcher.js"></script>
-        <script src="/examples/wasm/swipl-web.js"></script>
+        <script src="../../js/prolog.js"></script>
+        <script src="../../js/patcher.js"></script>
+        <script src="swipl-web.js"></script>
     </body>
 </html>
