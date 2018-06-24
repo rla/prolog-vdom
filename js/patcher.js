@@ -2,6 +2,9 @@ class Patcher {
 
     constructor(prolog, root) {
         this.prolog = prolog;
+        while (root.firstChild) {
+            root.removeChild(root.firstChild);
+        }
         const aux = document.createTextNode('');
         root.appendChild(aux);
         this.root = aux;
