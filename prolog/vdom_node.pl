@@ -14,6 +14,7 @@
     vdom_node_is_keyed/1      % +VDom
 ]).
 
+:- use_module(library(apply)).
 :- use_module(library(lists)).
 :- use_module(library(error)).
 :- use_module(vdom_component).

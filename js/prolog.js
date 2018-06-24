@@ -117,7 +117,7 @@ class Prolog {
         const len = this.module.lengthBytesUTF8(string) + 1;
         const ptr = this.module._malloc(len);
         this.module.stringToUTF8(string, ptr, len);
-        const ret = !!this.bindings.PL_put_chars(term, 5, len, ptr);
+        const ret = !!this.bindings.PL_put_chars(term, 5, len - 1, ptr);
         this.module._free(ptr);
         return ret;
     }
@@ -157,7 +157,7 @@ class Prolog {
     // Converts the argument term to a string.
     get_chars(term) {
         const ptr = this.module._malloc(4);
-        const flags = 0x0001 | 0x0002 | 0x0004 | 0x0008 | 0x0010 | 0x0020 | 0x0080 | 0x1000 | 0x0200; // REP_UTF8
+        const flags = 0x0001 | 0x0002 | 0x0004 | 0x0008 | 0x0010 | 0x0020 | 0x0080 | 0x1000 | 0x0200;
         if (this.bindings.PL_get_chars(term, ptr, flags)) {
             // TODO properly free.
             return this.module.UTF8ToString(this.module.getValue(ptr, 'i32'));

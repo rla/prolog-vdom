@@ -5,6 +5,7 @@
 :- use_module(library(lists)).
 :- use_module(library(apply)).
 :- use_module(library(error)).
+:- use_module(library(assoc)).
 :- use_module(vdom_component).
 :- use_module(vdom_node).
 :- use_module(vdom_build).
@@ -27,7 +28,7 @@ vdom_diff(VIn, VPrev, Diff, VOut):-
     vdom_diff(VIn, VPrev, [], List, VOut),
     Diff =.. [diff|List].
 
-vdom_diff(VIn, VPrev, Path, Diff, VOut):-    
+vdom_diff(VIn, VPrev, Path, Diff, VOut):-
     vdom_node_type(VIn, TIn),
     vdom_node_type(VPrev, TPrev),
     vdom_diff(TIn, TPrev, VIn, VPrev, Path, Diff, VOut).
@@ -92,7 +93,7 @@ vdom_diff(TIn, TPrev, _, _, _, _, _):-
 % Component input data has not been changed.
 % The last VDOM subtree is reused.
 
-vdom_diff_component(Name, Name, VIn, VPrev, _, [], VPrev):- !,
+vdom_diff_component(Name, Name, VIn, VPrev, _, [], VPrev):-
     vdom_node_data(VIn, DIn),
     vdom_node_data(VPrev, DPrev),
     DIn == DPrev, !.
@@ -101,7 +102,7 @@ vdom_diff_component(Name, Name, VIn, VPrev, _, [], VPrev):- !,
 % Render component and diff its output tree
 % with the previous VDOM tree.
 
-vdom_diff_component(Name, Name, VIn, VPrev, Path, Diff, VOut):-
+vdom_diff_component(Name, Name, VIn, VPrev, Path, Diff, VOut):- !,
     vdom_component_render(VIn, VRendered),
     vdom_diff(VRendered, VPrev, Path, Diff, VOut).
 
@@ -217,7 +218,7 @@ vdom_diff_tag_general(VIn, VPrev, Path, Diff, VOut):-
     vdom_node_tag(VPrev, Name, APrev, BPrev),
     length(BIn, Length),
     length(BPrev, Length), !,
-    vdom_diff_attrs(Path, AIn, APrev, DiffAttrs),
+    vdom_diff_attrs(Path, AIn, APrev, DiffAttrs),    
     vdom_diff_tag_general_body(BIn, BPrev, 0, Path, DiffBody, VBody),
     append(DiffAttrs, DiffBody, Diff),
     vdom_node_tag(VOut, Name, AIn, VBody).

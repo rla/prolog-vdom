@@ -1,4 +1,3 @@
-% TODO test keyed node attrs diff.
 :- begin_tests(vdom_diff).
 :- use_module(prolog/vdom_diff).
 :- use_module(prolog/vdom_component).
@@ -86,5 +85,20 @@ test(diff_attrs):-
         Diff, VOut),
     assertion(Diff = diff(set_attrs(path, attrs(className("class2"))))),
     assertion(VOut = div([className=class2], [])).
+
+test(diff_component_new, [setup(register_dummy),
+    cleanup(unregister_all)]):-
+    vdom_diff(dummy([data=hello], []), '', Diff, VOut),
+    assertion(Diff = diff(replace(path, div(attrs(className("hello")), body("hello"))))),
+    assertion(VOut = div([className=hello, component=dummy, data=hello], [hello])).
+
+test(diff_component_changed, [setup(register_dummy),
+    cleanup(unregister_all)]):-
+    vdom_diff(
+        dummy([data=world], []),
+        div([className=hello, component=dummy, data=hello], [hello]),
+        Diff, VOut),
+    assertion(Diff = diff(replace(path(0), "world"))),
+    assertion(VOut = div([className=hello, component=dummy, data=world], [world])).
 
 :- end_tests(vdom_diff).

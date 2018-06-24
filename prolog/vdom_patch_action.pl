@@ -13,7 +13,7 @@
 % Generates attributes update action at the given path.
 % Empty set of attributes generates no action.
 
-vdom_set_attrs_at(_, [], []).
+vdom_set_attrs_at(_, [], []):- !.
 
 vdom_set_attrs_at(Path, Changes, Diff):-
     must_be(nonvar, Path),
