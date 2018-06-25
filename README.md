@@ -11,8 +11,11 @@ Demo: <http://demos.rlaanemets.com/prolog-vdom/examples/wasm/>
 
 ## Overview
 
-Please see `examples/wasm/index.html` and `examples/wasm/app.pl` for
+Please see [examples/wasm/index.html][index-html] and [examples/wasm/app.pl][app] for
 actual code examples.
+
+[index-html]:examples/wasm/index.html
+[app]:examples/wasm/app.pl
 
 The Prolog code runs inside the WebAssembly module that contains
 running SWI-Prolog instance. The communication between the page
