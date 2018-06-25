@@ -15,12 +15,15 @@ Please see `examples/wasm/index.html` and `examples/wasm/app.pl` for
 actual code examples.
 
 The Prolog code runs inside the WebAssembly module that contains
-SWI-Prolog binary code. The communication between the page
-and Prolog is done through the SWI-Prolog Foreign Language Interface (FLI)
-and the Emscripten API.
+running SWI-Prolog instance. The communication between the page
+and Prolog is done through the SWI-Prolog [Foreign Language Interface][fli] (FLI)
+and the [Emscripten API][emapi].
+
+[fli]:http://www.swi-prolog.org/pldoc/man?section=foreign
+[emapi]:https://kripken.github.io/emscripten-site/docs/api_reference/index.html
 
 The application starts by rendering the initial state into the
-initial VDOM tree, passes it to the page side and recreates the
+initial VDOM tree, passes it to the page side and creates the
 actual DOM tree based on it. The glue code in the browser
 sets up generic event handlers (currently for events `click`,
 `input` and `submit`). Event handlers are set on the body
