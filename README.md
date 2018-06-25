@@ -11,6 +11,26 @@ Demo: <http://demos.rlaanemets.com/prolog-vdom/examples/wasm/>
 
 ## Overview
 
+Please see `examples/wasm/index.html` and `examples/wasm/app.pl` for
+actual code examples.
+
+The Prolog code runs inside the WebAssembly module that contains
+SWI-Prolog binary code. The communication between the page
+and Prolog is done through the SWI-Prolog Foreign Language Interface (FLI)
+and the Emscripten API.
+
+The application starts by rendering the initial state into the
+initial VDOM tree, passes it to the page side and recreates the
+actual DOM tree based on it. The glue code in the browser
+sets up generic event handlers (currently for events `click`,
+`input` and `submit`). Event handlers are set on the body
+element and rely on target element id's to differentiate between
+targets.
+
+On each event the application renders new VDOM tree, compares it
+to the previous one and sends diff to the glue code. The JavaScript
+glue code decodes the diff and applies it to the actual page DOM.
+
 ![Prolog VDOM](docs/prolog-vdom.png)
 
 ## Prolog API
